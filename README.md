@@ -1,4 +1,4 @@
-Hardware Wallets
+Ethers-Ledger
 ================
 
 This is a fork of @ethersproject/hardware-wallets.
