@@ -21,22 +21,19 @@ function waiter(duration: number): Promise<void> {
 }
 
 export class LedgerSigner extends ethers.Signer {
-    readonly type: string;
     readonly path: string
 
     readonly _eth: Promise<Eth>;
 
-    constructor(provider?: ethers.providers.Provider, type?: string, path?: string) {
+    constructor(provider?: ethers.providers.Provider, path?: string) {
         super();
         if (path == null) { path = defaultPath; }
-        if (type == null) { type = "default"; }
 
         ethers.utils.defineReadOnly(this, "path", path);
-        ethers.utils.defineReadOnly(this, "type", type);
         ethers.utils.defineReadOnly(this, "provider", provider || null);
 
-        const transport = transports[type];
-        if (!transport) { logger.throwArgumentError("unknown or unsupported type", "type", type); }
+        const transport = transports.hid;
+        if (!transport) { logger.throwError("transports.hid is null/undefined"); }
 
         ethers.utils.defineReadOnly(this, "_eth", transport.create().then((transport) => {
             const eth = new Eth(transport);
@@ -96,18 +93,25 @@ export class LedgerSigner extends ethers.Signer {
     async signTransaction(transaction: ethers.providers.TransactionRequest): Promise<string> {
         const tx = await ethers.utils.resolveProperties(transaction);
         console.log(tx);
-        const baseTx: ethers.utils.UnsignedTransaction = {
+        let baseTx: ethers.utils.UnsignedTransaction = {
             type: (tx.type || undefined),
             chainId: (tx.chainId || undefined),
             data: (tx.data || undefined),
             gasLimit: (tx.gasLimit || undefined),
-            gasPrice: (tx.gasPrice || undefined),
-            maxFeePerGas: (tx.maxFeePerGas || undefined),
-            maxPriorityFeePerGas: (tx.maxPriorityFeePerGas || undefined),
             nonce: (tx.nonce ? ethers.BigNumber.from(tx.nonce).toNumber(): undefined),
             to: (tx.to || undefined),
             value: (tx.value || undefined),
         };
+        if (baseTx.type == 2)
+        {
+            baseTx.gasPrice = (tx.gasPrice || undefined);
+            baseTx.maxFeePerGas = (tx.maxFeePerGas || undefined);
+            baseTx.maxPriorityFeePerGas = (tx.maxPriorityFeePerGas || undefined);
+        }
+        else
+        {
+            baseTx.gasPrice = (tx.gasPrice || undefined);
+        }
 
         const unsignedTx = ethers.utils.serializeTransaction(baseTx).substring(2);
         const sig = await this._retry((eth) => eth.signTransaction(this.path, unsignedTx));
@@ -120,6 +124,6 @@ export class LedgerSigner extends ethers.Signer {
     }
 
     connect(provider: ethers.providers.Provider): ethers.Signer {
-        return new LedgerSigner(provider, this.type, this.path);
+        return new LedgerSigner(provider, this.path);
     }
 }
