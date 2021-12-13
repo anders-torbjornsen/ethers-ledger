@@ -12,6 +12,7 @@
                 "<node_internals>/**"
             ],
             "program": "${workspaceFolder}\\testTransact.js",
+            "console": "integratedTerminal"
         }
     ]
 }

@@ -97,10 +97,13 @@ export class LedgerSigner extends ethers.Signer {
         const tx = await ethers.utils.resolveProperties(transaction);
         console.log(tx);
         const baseTx: ethers.utils.UnsignedTransaction = {
+            type: (tx.type || undefined),
             chainId: (tx.chainId || undefined),
             data: (tx.data || undefined),
             gasLimit: (tx.gasLimit || undefined),
             gasPrice: (tx.gasPrice || undefined),
+            maxFeePerGas: (tx.maxFeePerGas || undefined),
+            maxPriorityFeePerGas: (tx.maxPriorityFeePerGas || undefined),
             nonce: (tx.nonce ? ethers.BigNumber.from(tx.nonce).toNumber(): undefined),
             to: (tx.to || undefined),
             value: (tx.value || undefined),
