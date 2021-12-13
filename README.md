@@ -1,19 +1,17 @@
 Hardware Wallets
 ================
 
-Thid is still very experimental.
+This is a fork of @ethersproject/hardware-wallets.
 
-I only have 1 ledger nano, and testing is done locally (CirlceCI doesn't have
-ledgers plugged in ;)).
+This only supports NodeJS, as for browsers metamask supports Ledger anyway.
 
 API
 ===
 
 ```
-import { LedgerSigner } from "@ethersproject/hardware-wallets";
-const signer = new LedgerSigner(provider, type, path);
+import { LedgerSigner } from "@anders-t/ethers-ledger";
+const signer = new LedgerSigner(provider, path);
 // By default:
-//   - in node, type = "hid"
 //   - path is the default Ethereum path (i.e.  `m/44'/60'/0'/0/0`)
 ```
 
