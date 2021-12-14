@@ -1,8 +1,7 @@
 {
   "compilerOptions": {
-    "outDir": "./lib/",
+    "outDir": "./lib",
     "rootDir": "./src.ts",
-    "composite": true,
     "declaration": true,
     "declarationMap": true,
     "esModuleInterop": true,
@@ -25,9 +24,9 @@
     "sourceMap": true,
     "target": "es5"
   },
-  "exclude": [],
+  "exclude": ["node_modules", "lib"],
   "include": [
     "./thirdparty.d.ts",
-    "./src.ts/*"
+    "src.ts/**/*"
   ]
 }

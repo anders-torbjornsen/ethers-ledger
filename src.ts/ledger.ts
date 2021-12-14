@@ -2,8 +2,7 @@
 
 import { ethers } from "ethers";
 
-import { version } from "./_version";
-const logger = new ethers.utils.Logger(version);
+const logger = new ethers.utils.Logger("ethers-ledger/1.0.1");
 
 import Eth from "@ledgerhq/hw-app-eth";
 
