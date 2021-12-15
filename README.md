@@ -5,6 +5,11 @@ This is a fork of @ethersproject/hardware-wallets.
 
 This only supports NodeJS, as for browsers metamask supports Ledger anyway.
 
+Installation
+=============
+
+`npm install @anders-t/ethers-ledger`
+
 API
 ===
 
