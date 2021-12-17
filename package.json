@@ -1,6 +1,6 @@
 {
   "name": "@anders-t/ethers-ledger",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Hardware Wallet support for ethers (NodeJS only).",
   "author": "Anders Torbjørnsen <anders.torbjornsen87@gmail.com>",
   "dependencies": {

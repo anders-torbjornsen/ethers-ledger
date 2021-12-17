@@ -2,7 +2,7 @@
 
 import { ethers } from "ethers";
 
-const logger = new ethers.utils.Logger("ethers-ledger/1.0.1");
+const logger = new ethers.utils.Logger("ethers-ledger/1.0.2");
 
 import Eth from "@ledgerhq/hw-app-eth";
 
@@ -91,7 +91,7 @@ export class LedgerSigner extends ethers.Signer {
 
     async signTransaction(transaction: ethers.providers.TransactionRequest): Promise<string> {
         const tx = await ethers.utils.resolveProperties(transaction);
-        console.log(tx);
+        
         let baseTx: ethers.utils.UnsignedTransaction = {
             type: (tx.type || undefined),
             chainId: (tx.chainId || undefined),
