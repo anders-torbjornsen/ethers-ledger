@@ -5,6 +5,8 @@ import { ethers } from "ethers";
 const logger = new ethers.utils.Logger("ethers-ledger/1.0.2");
 
 import Eth from "@ledgerhq/hw-app-eth";
+import { LoadConfig, ResolutionConfig, LedgerEthTransactionResolution } from "@ledgerhq/hw-app-eth/lib/services/ledger"
+import ledgerService from "@ledgerhq/hw-app-eth/lib/services/ledger"
 
 // We store these in a separated import so it is easier to swap them out
 // at bundle time; browsers do not get HID, for example. This maps a string
@@ -113,7 +115,12 @@ export class LedgerSigner extends ethers.Signer {
         }
 
         const unsignedTx = ethers.utils.serializeTransaction(baseTx).substring(2);
-        const sig = await this._retry((eth) => eth.signTransaction(this.path, unsignedTx));
+
+        const loadConfig: LoadConfig = {};
+        const resolutionConfig: ResolutionConfig = { externalPlugins: true, erc20: true };
+        const resolution: LedgerEthTransactionResolution = await ledgerService.resolveTransaction(unsignedTx, loadConfig, resolutionConfig);
+
+        const sig = await this._retry((eth) => eth.signTransaction(this.path, unsignedTx, resolution));
 
         return ethers.utils.serializeTransaction(baseTx, {
             v: ethers.BigNumber.from("0x" + sig.v).toNumber(),

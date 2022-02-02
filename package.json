@@ -4,9 +4,9 @@
   "description": "Hardware Wallet support for ethers (NodeJS only).",
   "author": "Anders Torbjørnsen <anders.torbjornsen87@gmail.com>",
   "dependencies": {
-    "@ledgerhq/hw-app-eth": "^6.18.0",
-    "@ledgerhq/hw-transport-node-hid": "^6.11.2",
-    "ethers": "^5.5.2"
+    "@ledgerhq/hw-app-eth": "^6.24.0",
+    "@ledgerhq/hw-transport-node-hid": "^6.20.0",
+    "ethers": "^5.5.4"
   },
   "keywords": [
     "Ethereum",
