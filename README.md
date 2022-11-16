@@ -5,6 +5,8 @@ This is a fork of @ethersproject/hardware-wallets.
 
 This only supports NodeJS, as for browsers metamask supports Ledger anyway.
 
+**NOTE: This is not maintained, I now use frame to deploy/interact with contracts from nodeJS scripts with a Ledger**
+
 Installation
 =============
 
